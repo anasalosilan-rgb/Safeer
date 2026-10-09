@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سَفير الفلبين | Safeer PH Ultimate Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #040711;
+            color: #f1f5f9;
+        }
+        .bg-card {
+            background-color: #0a1120;
+            border: 1px solid #162442;
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #050914;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #162442;
+            border-radius: 4px;
+        }
+        .intro-bg {
+            background: radial-gradient(circle at center, rgba(6, 182, 212, 0.2) 0%, rgba(4, 7, 17, 0.95) 75%),
+                        url('https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        }
+        .hero-banner-bg {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(10, 17, 32, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-400 selection:text-slate-950 custom-scrollbar">
+
+    <!-- ================= 1. INTRO SCREEN ================= -->
+    <div id="introScreen" class="fixed inset-0 z-50 intro-bg flex flex-col items-center justify-center p-6 text-center space-y-6 backdrop-blur-md">
+        <div class="relative">
+            <div class="w-28 h-28 bg-gradient-to-tr from-cyan-400 via-blue-600 to-amber-400 rounded-3xl flex items-center justify-center text-5xl text-slate-950 font-black shadow-2xl neon-glow-cyan animate-bounce">
+                🇵🇭
+            </div>
+            <span class="absolute -bottom-2 -right-2 bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow">PRO VIP</span>
+        </div>
+
+        <div class="space-y-3 max-w-lg">
+            <span class="bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest">
+                Safeer Philippines Ultimate
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-black text-white leading-tight">
+                دليلك الخرافي للتعليم والسيّاحة والمطاعم الحلال بالفلبين
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-300 font-bold leading-relaxed">
+                استكشف المعاهد بالصور (EV Academy)، الخريطة التفاعلية للمطاعم الحلال، والمساعد الذكي للإجابات السريعة.
+            </p>
+        </div>
+
+        <button onclick="enterApp()" class="bg-gradient-to-r from-cyan-400 via-teal-400 to-amber-400 text-slate-950 font-black px-10 py-4 rounded-2xl text-sm shadow-2xl hover:scale-105 transition duration-300 neon-glow-cyan">
+            انطلق واستكشف التطبيق الآن <i class="fa-solid fa-plane-departure mr-2"></i>
+        </button>
+    </div>
+
+    <!-- ================= 2. NAVBAR ================= -->
+    <header class="bg-[#060a14]/90 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md px-4 sm:px-8 py-3.5">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-2xl flex items-center justify-center text-2xl font-black cursor-pointer shadow" ondblclick="openAdminPrompt()" title="نقرتين للأدمن">
+                    🇵🇭
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl font-black text-white tracking-wide">سَفير الفلبين</span>
+                        <span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md">ULTIMATE</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 font-bold">المطور: انس محمد العسيلان</p>
+                </div>
+            </div>
+
+            <!-- Live Timer Widget -->
+            <div class="bg-slate-950 px-4 py-2 rounded-2xl border border-cyan-500/30 flex items-center gap-3 text-xs font-extrabold text-cyan-400 shadow">
+                <i class="fa-solid fa-stopwatch text-amber-400 text-base"></i>
+                <div>
+                    <span class="text-[10px] text-slate-400 block font-bold">تحدي الإقامة والدراسة بالفلبين:</span>
+                    <span id="stayTimerDisplay" class="text-white font-black">14 يوم، 08 ساعة، 12 دقيقة</span>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 text-xs font-black overflow-x-auto max-w-full">
+                <button onclick="switchTab('institutes')" id="tabInstitutes" class="px-4 py-2 rounded-xl bg-cyan-400 text-slate-950 transition">
+                    <i class="fa-solid fa-graduation-cap ml-1"></i> المعاهد بالصور
+                </button>
+                <button onclick="switchTab('halalmap')" id="tabHalalMap" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-map-location-dot text-emerald-400 ml-1"></i> خريطة الحلال والجزر
+                </button>
+                <button onclick="switchTab('aiCoach')" id="tabAiCoach" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-robot text-amber-400 ml-1"></i> المساعد الذكي
+                </button>
+                <button onclick="switchTab('currency')" id="tabCurrency" class="px-4 py-2 rounded-xl text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-coins text-sky-400 ml-1"></i> تحويل البيسو (PHP)
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTAINER ================= -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 space-y-6 w-full flex-1">
+
+        <!-- ================= TAB 1: INSTITUTES WITH GALLERY ================= -->
+        <div id="secInstitutes" class="space-y-6">
+
+            <div class="hero-banner-bg p-6 sm:p-8 rounded-3xl border border-cyan-500/30 space-y-3 shadow-2xl">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <span class="text-xs font-black text-cyan-400 uppercase tracking-widest"><i class="fa-solid fa-award ml-1"></i> المعاهد الموصى بها وترتيبها في سيبو</span>
+                        <h2 class="text-2xl font-black text-white">ترتيب أفضل معاهد اللغة بالفلبين بالصور والتفاصيل الكاملة</h2>
+                        <p class="text-xs text-slate-300 font-bold">مصنفة حسب تقارير الطلاب وتقييمات جوجل ومستوى السكن والوجبات والأنشطة الأسبوعية</p>
+                    </div>
+                    <button onclick="openStudentRegModal()" class="bg-cyan-400 hover:bg-cyan-500 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs shadow-lg transition">
+                        <i class="fa-solid fa-id-card ml-1"></i> التسجيل بصفحة الطالب
+                    </button>
+                </div>
+            </div>
+
+            <!-- Institutes List Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="institutesGrid">
+                <!-- Dynamic Institutes Rendering -->
+            </div>
+
+        </div>
+
+        <!-- ================= TAB 2: INTERACTIVE HALAL & ISLANDS MAP ================= -->
+        <div id="secHalalMap" class="hidden space-y-6">
+
+            <div class="bg-card p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <h2 class="text-base font-black text-white flex items-center gap-2">
+                            <i class="fa-solid fa-utensils text-emerald-400"></i> خريطة المطاعم الحلال والمساجد في الجزر الفلبينية
+                        </h2>
+                        <p class="text-xs text-slate-400 font-bold">اختر الجزيرة لاستعراض المطاعم الحلال المعتمدة، المساجد القريبة، والأماكن السياحية</p>
+                    </div>
+
+                    <!-- Island Filter Buttons -->
+                    <div class="flex items-center gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 text-xs font-black">
+                        <button onclick="filterIslandMap('cebu')" id="btnCebu" class="px-3.5 py-1.5 rounded-xl bg-cyan-400 text-slate-950">جزيرة سيبو (Cebu)</button>
+                        <button onclick="filterIslandMap('boracay')" id="btnBoracay" class="px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white">بوراكاي (Boracay)</button>
+                        <button onclick="filterIslandMap('palawan')" id="btnPalawan" class="px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white">بالوان (Palawan)</button>
+                        <button onclick="filterIslandMap('siargao')" id="btnSiargao" class="px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white">سيارجاو (Siargao)</button>
+                    </div>
+                </div>
+
+                <!-- Spot Filter Type (All, Halal, Cafe, Sightseeing) -->
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                    <span>التصنيف:</span>
+                    <button onclick="filterSpotType('all')" class="bg-slate-900 border border-slate-800 text-white px-3 py-1 rounded-lg">الكل</button>
+                    <button onclick="filterSpotType('halal')" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-lg">🟢 مطاعم حلال ومساجد</button>
+                    <button onclick="filterSpotType('cafe')" class="bg-amber-500/10 border border-amber-500/30 text-amber-400 px-3 py-1 rounded-lg">☕ مقاهي وكافيهات</button>
+                </div>
+
+                <!-- Places Display Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="halalSpotsGrid">
+                    <!-- Dynamic Spots -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= TAB 3: AI SMART COACH ================= -->
+        <div id="secAiCoach" class="hidden space-y-6">
+
+            <div class="bg-card p-6 rounded-3xl border border-slate-800 space-y-4 shadow-2xl max-w-4xl mx-auto">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center text-lg shadow">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-black text-white">المستشار الأكاديمي الذكي (Safeer AI Coach)</h2>
+                            <p class="text-[10px] text-slate-400 font-bold">إجابات منطقية وفورية عن دراسة اللغة، معاهد سيبو، والفيزا</p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-black px-3 py-1 rounded-xl">متصل 24/7</span>
+                </div>
+
+                <!-- Quick Prompts Buttons -->
+                <div class="space-y-1.5">
+                    <span class="text-[11px] font-bold text-slate-400 block">اختصارات أسئلة شائعة (اضغط للسؤال فوراً):</span>
+                    <div class="flex flex-wrap gap-2 text-xs font-bold">
+                        <button onclick="askQuickPrompt('ما هو أفضل معهد لغة في سيبو ولماذا؟')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 px-3 py-1.5 rounded-xl transition">
+                            🎓 ما هو أفضل معهد في سيبو؟
+                        </button>
+                        <button onclick="askQuickPrompt('كيف استخرج تصريح الدراسة SSP بالفلبين؟')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-emerald-400 px-3 py-1.5 rounded-xl transition">
+                            📄 إجراءات تصريح الـ SSP؟
+                        </button>
+                        <button onclick="askQuickPrompt('ما هي التكلفة التقديرية لدراسة شهر شامل بالسكن والوجبات؟')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-amber-400 px-3 py-1.5 rounded-xl transition">
+                            💰 تكلفة الدراسة شاملة السكن؟
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Messages Box -->
+                <div id="aiChatBox" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 h-64 overflow-y-auto space-y-3 custom-scrollbar text-xs font-bold">
+                    <div class="bg-slate-900 p-3 rounded-2xl border border-slate-800 text-slate-200 max-w-[90%] space-y-1">
+                        <span class="text-amber-400 text-[10px] font-black block"><i class="fa-solid fa-sparkles"></i> المستشار الذكي:</span>
+                        <p class="leading-relaxed">أهلاً بك! أنا مستشارك الذكي لرحلة الفلبين. اختر إحدى أسرار الاختصارات أعلاه أو اكتب سؤالك فوراً.</p>
+                    </div>
+                </div>
+
+                <!-- Input Chat Bar -->
+                <div class="flex items-center gap-2 pt-2 border-t border-slate-800">
+                    <input type="text" id="aiInputMsg" onkeypress="if(event.key==='Enter') sendAiMsg()" placeholder="اسأل المستشار الذكي عن المعاهد، الفيزا، أو المطاعم الحلال..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                    <button onclick="sendAiMsg()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs shadow transition">
+                        إرسال <i class="fa-solid fa-paper-plane mr-1"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= TAB 4: CURRENCY CONVERTER ================= -->
+        <div id="secCurrency" class="hidden space-y-6">
+
+            <div class="bg-card p-6 rounded-3xl border border-slate-800 space-y-6 shadow-2xl max-w-3xl mx-auto">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div>
+                        <h2 class="text-base font-black text-white flex items-center gap-2">
+                            <i class="fa-solid fa-coins text-amber-400"></i> حاسبة تحويل البيسو الفلبيني (PHP Rate)
+                        </h2>
+                        <p class="text-xs text-slate-400 font-bold">تحديث يومي فوري لأسعار الصرف مقابل الريال السعودي والدولار</p>
+                    </div>
+                    <span class="bg-amber-400/10 border border-amber-400/30 text-amber-400 text-[10px] font-black px-3 py-1 rounded-xl">محدث اليوم</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-slate-300 block">المبلغ بالبيسو الفلبيني (PHP):</label>
+                        <input type="number" id="inputPHPVal" value="10000" oninput="convertCurrency()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-black text-amber-400 focus:outline-none focus:border-amber-400">
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-slate-300 block">المبلغ بالريال السعودي (SAR):</label>
+                        <input type="number" id="inputSARVal" value="650" oninput="convertFromSAR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-black text-cyan-400 focus:outline-none focus:border-cyan-400">
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs font-bold text-slate-300 space-y-2">
+                    <div class="flex justify-between border-b border-slate-900 pb-1.5">
+                        <span>سعر الصرف المعتمد:</span>
+                        <span class="text-emerald-400 font-black">100 PHP ≈ 6.50 SAR</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>المقابل بالدولار الأمريكي (USD):</span>
+                        <span class="text-cyan-400 font-black" id="calcUSDVal">$178.50 USD</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ================= MODAL: STUDENT REGISTRATION ================= -->
+    <div id="studentRegModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="bg-card max-w-md w-full p-6 rounded-3xl border border-slate-800 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="font-black text-white text-sm"><i class="fa-solid fa-id-card text-cyan-400 ml-1"></i> التسجيل في بوابة الطالب الفلبين</h3>
+                <button onclick="closeStudentRegModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-3 text-xs font-bold">
+                <div>
+                    <label class="text-slate-300 block mb-1">اسم الطالب الكامل:</label>
+                    <input type="text" id="regStudentName" placeholder="أدخل اسمك الكريم" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="text-slate-300 block mb-1">رقم الجوال / الواتساب:</label>
+                    <input type="tel" id="regStudentPhone" placeholder="05xxxxxxxx" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="text-slate-300 block mb-1">المعهد المختار للارتحال:</label>
+                    <select id="regStudentInstitute" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-cyan-400">
+                        <option value="EV Academy (Cebu)">EV Academy (سيبو)</option>
+                        <option value="CIA Institute (Cebu)">CIA Institute (سيبو)</option>
+                        <option value="SMEAG Global (Cebu)">SMEAG Global (سيبو)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-slate-300 block mb-1">تاريخ بداية الإقامة بالفلبين:</label>
+                    <input type="date" id="regStartDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+            </div>
+
+            <button onclick="submitStudentRegistration()" class="w-full bg-cyan-400 hover:bg-cyan-500 text-slate-950 font-black py-3 rounded-xl text-xs shadow transition">
+                حفظ التسجيل وبدء التحدي <i class="fa-solid fa-check mr-1"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: ADMIN DASHBOARD ================= -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="bg-card max-w-3xl w-full p-6 rounded-3xl border border-slate-800 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto custom-scrollbar">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="font-black text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> لوحة الإدارة وقاعدة البيانات - انس محمد العسيلان
+                </h3>
+                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 text-center text-xs font-black">
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">إجمالي الطلاب</span>
+                    <span class="text-xl text-cyan-400" id="adminCountTotal">0</span>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">معهد EV Academy</span>
+                    <span class="text-xl text-amber-400" id="adminCountEV">0</span>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">الحالة</span>
+                    <span class="text-xl text-emerald-400">نشط الآن</span>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs">
+                    <thead>
+                        <tr class="text-slate-400 border-b border-slate-800">
+                            <th class="pb-2">اسم الطالب</th>
+                            <th class="pb-2">الجوال</th>
+                            <th class="pb-2">المعهد</th>
+                            <th class="pb-2">تاريخ البدء</th>
+                            <th class="pb-2 text-center">حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminStudentsTable" class="divide-y divide-slate-800 font-bold text-slate-200">
+                        <!-- Dynamic Table -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500 bg-[#040711]">
+        حقوق التطوير محفوظة © <span class="font-extrabold text-cyan-400">انس محمد العسيلان</span> - تطبيق سَفير الفلبين
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        const institutesData = [
+            {
+                id: 1,
+                name: 'EV Academy (سيبو)',
+                rank: '#1 المعترَف به والأفضل تقييماً في الفلبين',
+                googleRating: '4.9 ★★★★★ (Google)',
+                desc: 'المعهد الأكثر فخامة بتصميم منتجعي ساحر، يحتوي على نظام مكثف جداً (Sparta & Semi-Sparta) ومدرسين على أعلى مستوى.',
+                images: [
+                    { title: 'الفصول والمبنى الرئيسي', url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80' },
+                    { title: 'الغرف والسكن الطلابي', url: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80' },
+                    { title: 'المطعم والمقهى الخاص', url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80' }
+                ],
+                features: ['نظام بوفيه وجبات ممتاز', 'مسبح ونادي رياضي ومقهى خاص', 'سكن حديث فندقي'],
+                tag: 'الخيار الأول (Top Recommended)'
+            },
+            {
+                id: 2,
+                name: 'CIA Institute (سيبو)',
+                rank: '#2 معهد مقاطعة ماكتان سيبو',
+                googleRating: '4.8 ★★★★★',
+                desc: 'معهد فاخر بجوار الشواطئ، ممتاز جداً لاختبارات الأيلتس IELTS وتطوير اللغة والتحدث اليومي المكثف.',
+                images: [
+                    { title: 'المبنى الفندقي', url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80' },
+                    { title: 'قاعات الدراسة', url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80' }
+                ],
+                features: ['موقع قيد الشاطئ', 'أنشطة أسبوعية ممتازة', 'تعدد جنسيات واسع'],
+                tag: 'الأفضل للأيلتس'
+            },
+            {
+                id: 3,
+                name: 'SMEAG Global (سيبو)',
+                rank: '#3 مركز اختبارات الآيلتس الرسمية',
+                googleRating: '4.7 ★★★★☆',
+                desc: 'أكبر سلسلة معاهد في الفلبين، يحتوي على مركز اختبارات آيلتس وتوفل رسمي معتمد من المجلس البريطاني.',
+                images: [
+                    { title: 'قاعات الاختبار المعتمدة', url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80' }
+                ],
+                features: ['مركز اختبار رسمي', 'انضباط أكاديمي ممتاز', 'قاعات مذاكرة 24/7'],
+                tag: 'أكاديمي صارم'
+            }
+        ];
+
+        const islandSpotsData = {
+            cebu: [
+                { category: 'halal', type: 'مطعم حلال معتمد', name: 'Shawarma Gourmet Cebu', desc: 'مطعم عربي شامي يقدم وجبات حلال معتمدة في قلب سيبو.', icon: 'fa-utensils' },
+                { category: 'halal', type: 'مسجد ومجمّع', name: 'Al-Kher Islamic Center Cebu', desc: 'المسجد والمركز الإسلامي الرئيسي لأداء صلاة الجمعة بسيبو.', icon: 'fa-mosque' },
+                { category: 'cafe', type: 'كافيه ممتاز', name: 'The Abaca Baking Company', desc: 'أرقى مخبز وكافيه بسيبو للقهوة المختصة وجلسات المذاكرة.', icon: 'fa-mug-hot' }
+            ],
+            boracay: [
+                { category: 'halal', type: 'مطعم حلال شاطئي', name: 'Halal Khalil Restaurant Boracay', desc: 'مطعم حلال يقدم أكلات عربية وآسيوية على الشاطئ مباشرة.', icon: 'fa-utensils' },
+                { category: 'halal', type: 'مصلى حلال', name: 'Boracay Muslim Community Center', desc: 'مصلى ومركز إسلامي صغير يقدم الوجبات الحلال.', icon: 'fa-mosque' },
+                { category: 'cafe', type: 'كافيه استوائي', name: 'Jonah’s Fruit Shake', desc: 'أشهر عصير استوائي وقهوة على الشاطئ الناعم.', icon: 'fa-glass-water' }
+            ],
+            palawan: [
+                { category: 'halal', type: 'مطعم حلال', name: 'Balinsasayaw Halal Restaurant', desc: 'مطعم أكلات بحرية حلال معتمد في بورتو برينسيسا.', icon: 'fa-fish' },
+                { category: 'cafe', type: 'كافيه مميز', name: 'Gusto Gelato & Coffee El Nido', desc: 'أفضل كافيه إيطالي للقهوة والآيس كريم بقرب البحر.', icon: 'fa-ice-cream' }
+            ],
+            siargao: [
+                { category: 'halal', type: 'مطعم حلال وبحري', name: 'Siargao Halal Food Spot', desc: 'وجبات بحرية ونباتية حلال على الشاطئ مباشرة.', icon: 'fa-utensils' },
+                { category: 'cafe', type: 'كافيه صحي', name: 'Shaka Cafe Siargao', desc: 'أشهر كافيه عصائر وأطباق الفاكهة للراكبين.', icon: 'fa-leaf' }
+            ]
+        };
+
+        let currentSelectedIsland = 'cebu';
+        let currentSelectedCategory = 'all';
+
+        let registeredStudents = JSON.parse(localStorage.getItem('safeer_ph_students')) || [
+            { id: 1, name: 'انس محمد العسيلان', phone: '0500000000', institute: 'EV Academy (Cebu)', date: '2026-09-01' }
+        ];
+
+        let stayStartDate = new Date('2026-09-01');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderInstitutes();
+            filterIslandMap('cebu');
+            startTimer();
+        });
+
+        function enterApp() {
+            document.getElementById('introScreen').classList.add('hidden');
+        }
+
+        /* Render Institutes */
+        function renderInstitutes() {
+            const grid = document.getElementById('institutesGrid');
+            grid.innerHTML = institutesData.map(inst => `
+                <div class="bg-card p-5 rounded-3xl border border-slate-800 space-y-4 shadow-2xl">
+                    <div class="flex justify-between items-start">
+                        <span class="bg-amber-400 text-slate-950 text-[10px] font-black px-3 py-1 rounded-lg">${inst.tag}</span>
+                        <span class="text-xs text-amber-400 font-extrabold">${inst.googleRating}</span>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-black text-white">${inst.name}</h3>
+                        <span class="text-xs text-cyan-400 font-bold block">${inst.rank}</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        ${inst.images.map(img => `
+                            <div class="group relative h-24 rounded-2xl overflow-hidden border border-slate-800">
+                                <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                                <span class="absolute bottom-0 inset-x-0 bg-slate-950/80 text-[9px] font-bold text-center py-0.5 text-slate-300">${img.title}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <p class="text-xs text-slate-300 font-medium leading-relaxed">${inst.desc}</p>
+
+                    <div class="space-y-1.5 pt-2 border-t border-slate-800 text-xs text-slate-300 font-bold">
+                        ${inst.features.map(f => `<div class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-cyan-400 text-xs"></i> ${f}</div>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* Halal Map Filter Logic */
+        function filterIslandMap(islandKey) {
+            currentSelectedIsland = islandKey;
+            document.getElementById('btnCebu').className = "px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white";
+            document.getElementById('btnBoracay').className = "px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white";
+            document.getElementById('btnPalawan').className = "px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white";
+            document.getElementById('btnSiargao').className = "px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white";
+
+            if (islandKey === 'cebu') document.getElementById('btnCebu').className = "px-3.5 py-1.5 rounded-xl bg-cyan-400 text-slate-950 font-black";
+            if (islandKey === 'boracay') document.getElementById('btnBoracay').className = "px-3.5 py-1.5 rounded-xl bg-cyan-400 text-slate-950 font-black";
+            if (islandKey === 'palawan') document.getElementById('btnPalawan').className = "px-3.5 py-1.5 rounded-xl bg-cyan-400 text-slate-950 font-black";
+            if (islandKey === 'siargao') document.getElementById('btnSiargao').className = "px-3.5 py-1.5 rounded-xl bg-cyan-400 text-slate-950 font-black";
+
+            renderHalalSpots();
+        }
+
+        function filterSpotType(category) {
+            currentSelectedCategory = category;
+            renderHalalSpots();
+        }
+
+        function renderHalalSpots() {
+            let spots = islandSpotsData[currentSelectedIsland] || [];
+            if (currentSelectedCategory !== 'all') {
+                spots = spots.filter(s => s.category === currentSelectedCategory);
+            }
+
+            const grid = document.getElementById('halalSpotsGrid');
+            grid.innerHTML = spots.map(s => `
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 text-xs font-bold shadow-xl">
+                    <div class="flex items-center justify-between">
+                        <span class="text-emerald-400 text-[10px] font-black uppercase"><i class="fa-solid ${s.icon} ml-1"></i> ${s.type}</span>
+                    </div>
+                    <h4 class="text-white font-black text-sm">${s.name}</h4>
+                    <p class="text-slate-400 font-medium leading-relaxed">${s.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        /* AI Smart Coach Quick Answers */
+        function askQuickPrompt(question) {
+            document.getElementById('aiInputMsg').value = question;
+            sendAiMsg();
+        }
+
+        function sendAiMsg() {
+            const input = document.getElementById('aiInputMsg');
+            const val = input.value.trim();
+            if (!val) return;
+
+            const box = document.getElementById('aiChatBox');
+            box.innerHTML += `
+                <div class="bg-cyan-500/10 border border-cyan-500/30 p-2.5 rounded-2xl text-cyan-300 font-bold max-w-[85%] mr-auto text-left">
+                    ${val}
+                </div>
+            `;
+
+            let reply = "معهد EV Academy في سيبو هو الخيار الأكثر توصية ورغبة لدى الطلاب العرب لخدماته الفندقية المتكاملة وتنوع الوجبات المجهزة بنظام سبرتا عالي المستوى.";
+
+            if (val.includes('SSP')) {
+                reply = "تصريح الـ SSP هو وثيقة دراسية رسمية صادرة من مكتب الهجرة الفلبيني، يتم استخراجها عبر المعهد مباشرة فور وصولك بتكلفة تقريبية 7,500 بيسو.";
+            } else if (val.includes('تكلفة')) {
+                reply = "التكلفة التقديرية لدراسة شهر واحد بـ EV Academy تتراوح بين 1,200$ إلى 1,400$ شاملة (السكن، الوجبات اليومية، المناهج، وتصريح الـ SSP).";
+            }
+
+            setTimeout(() => {
+                box.innerHTML += `
+                    <div class="bg-slate-900 p-3 rounded-2xl border border-slate-800 text-slate-200 max-w-[90%] space-y-1">
+                        <span class="text-amber-400 text-[10px] font-black block"><i class="fa-solid fa-sparkles"></i> المستشار الذكي:</span>
+                        <p class="leading-relaxed">${reply}</p>
+                    </div>
+                `;
+                box.scrollTop = box.scrollHeight;
+            }, 300);
+
+            input.value = '';
+        }
+
+        /* Live Timer Calculation */
+        function startTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const diffMs = now - stayStartDate;
+                const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+                const mins = Math.floor((diffMs / (1000 * 60)) % 60);
+
+                document.getElementById('stayTimerDisplay').innerText = `${days} يوم، ${hours} ساعة، ${mins} دقيقة`;
+            }, 1000);
+        }
+
+        /* Currency Handlers */
+        function convertCurrency() {
+            const php = parseFloat(document.getElementById('inputPHPVal').value) || 0;
+            const sar = (php * 0.065).toFixed(2);
+            const usd = (php * 0.01785).toFixed(2);
+
+            document.getElementById('inputSARVal').value = sar;
+            document.getElementById('calcUSDVal').innerText = `$${usd} USD`;
+        }
+
+        function convertFromSAR() {
+            const sar = parseFloat(document.getElementById('inputSARVal').value) || 0;
+            const php = Math.round(sar / 0.065);
+            const usd = (sar / 3.75).toFixed(2);
+
+            document.getElementById('inputPHPVal').value = php;
+            document.getElementById('calcUSDVal').innerText = `$${usd} USD`;
+        }
+
+        /* Student Register Modal */
+        function openStudentRegModal() {
+            document.getElementById('studentRegModal').classList.remove('hidden');
+            document.getElementById('studentRegModal').classList.add('flex');
+        }
+
+        function closeStudentRegModal() {
+            document.getElementById('studentRegModal').classList.add('hidden');
+            document.getElementById('studentRegModal').classList.remove('flex');
+        }
+
+        function submitStudentRegistration() {
+            const name = document.getElementById('regStudentName').value.trim();
+            const phone = document.getElementById('regStudentPhone').value.trim();
+            const institute = document.getElementById('regStudentInstitute').value;
+            const startDate = document.getElementById('regStartDate').value;
+
+            if (!name) return alert('يرجى إدخال اسمك الكريِم');
+
+            registeredStudents.unshift({ id: Date.now(), name, phone, institute, date: startDate || '2026-09-01' });
+            localStorage.setItem('safeer_ph_students', JSON.stringify(registeredStudents));
+
+            if (startDate) stayStartDate = new Date(startDate);
+
+            closeStudentRegModal();
+            alert(`تم توثيق بيانتك بنجاح يا ${name}! تم تفعيل تحدي الإقامة والدراسة في ${institute}`);
+        }
+
+        /* Admin Dashboard (رمز السر 1199) */
+        function openAdminPrompt() {
+            const pass = prompt("أدخل الرقم السري للوحة تحكم الأدمن المطور:");
+            if (pass === "1199") {
+                renderAdminData();
+                document.getElementById('adminModal').classList.remove('hidden');
+                document.getElementById('adminModal').classList.add('flex');
+            } else if (pass !== null) {
+                alert("الرمز غير صحيح!");
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+            document.getElementById('adminModal').classList.remove('flex');
+        }
+
+        function renderAdminData() {
+            document.getElementById('adminCountTotal').innerText = registeredStudents.length;
+            document.getElementById('adminCountEV').innerText = registeredStudents.filter(s => s.institute.includes('EV')).length;
+
+            const tbody = document.getElementById('adminStudentsTable');
+            tbody.innerHTML = registeredStudents.map(s => `
+                <tr>
+                    <td class="py-2.5">${s.name}</td>
+                    <td class="py-2.5">${s.phone || '-'}</td>
+                    <td class="py-2.5 text-cyan-400">${s.institute}</td>
+                    <td class="py-2.5">${s.date}</td>
+                    <td class="py-2.5 text-center">
+                        <button onclick="deleteStudent(${s.id})" class="text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteStudent(id) {
+            registeredStudents = registeredStudents.filter(s => s.id !== id);
+            localStorage.setItem('safeer_ph_students', JSON.stringify(registeredStudents));
+            renderAdminData();
+        }
+
+        /* Navigation Tabs Switcher */
+        function switchTab(tab) {
+            document.getElementById('secInstitutes').classList.add('hidden');
+            document.getElementById('secHalalMap').classList.add('hidden');
+            document.getElementById('secAiCoach').classList.add('hidden');
+            document.getElementById('secCurrency').classList.add('hidden');
+
+            document.getElementById('tabInstitutes').className = "px-4 py-2 rounded-xl text-slate-400 hover:text-white transition";
+            document.getElementById('tabHalalMap').className = "px-4 py-2 rounded-xl text-slate-400 hover:text-white transition";
+            document.getElementById('tabAiCoach').className = "px-4 py-2 rounded-xl text-slate-400 hover:text-white transition";
+            document.getElementById('tabCurrency').className = "px-4 py-2 rounded-xl text-slate-400 hover:text-white transition";
+
+            if (tab === 'institutes') {
+                document.getElementById('secInstitutes').classList.remove('hidden');
+                document.getElementById('tabInstitutes').className = "px-4 py-2 rounded-xl bg-cyan-400 text-slate-950 font-black";
+            } else if (tab === 'halalmap') {
+                document.getElementById('secHalalMap').classList.remove('hidden');
+                document.getElementById('tabHalalMap').className = "px-4 py-2 rounded-xl bg-emerald-400 text-slate-950 font-black";
+            } else if (tab === 'aiCoach') {
+                document.getElementById('secAiCoach').classList.remove('hidden');
+                document.getElementById('tabAiCoach').className = "px-4 py-2 rounded-xl bg-amber-400 text-slate-950 font-black";
+            } else if (tab === 'currency') {
+                document.getElementById('secCurrency').classList.remove('hidden');
+                document.getElementById('tabCurrency').className = "px-4 py-2 rounded-xl bg-sky-400 text-slate-950 font-black";
+            }
+        }
+    </script>
+</body>
+</html>
